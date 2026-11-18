@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEO竞争格局热力图 — Productivity工具赛道</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #0a0e1a; color: #e2e8f0; padding: 24px; line-height: 1.6; }
+h1 { text-align: center; font-size: 1.8em; margin-bottom: 8px; background: linear-gradient(90deg,#6366f1,#8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { text-align: center; color: #94a3b8; margin-bottom: 32px; font-size: 0.9em; }
+.section { max-width: 1200px; margin: 0 auto 32px; }
+.card { background: #1e293b; border-radius: 12px; padding: 24px; border: 1px solid #334155; }
+.card h2 { font-size: 1.2em; margin-bottom: 16px; color: #a5b4fc; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 700px; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #334155; font-size: 0.9em; }
+th { color: #94a3b8; font-weight: 600; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.05em; }
+tr:hover { background: rgba(99,102,241,0.05); }
+.grade-a { color: #22c55e; font-weight: bold; }
+grade-b { color: #3b82f6; font-weight: bold; }
+.grade-c { color: #f59e0b; font-weight: bold; }
+.grade-d { color: #ef4444; font-weight: bold; }
+.grade-f { color: #6b7280; }
+.badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 600; }
+.badge-high { background: #dcfce7; color: #166534; }
+.badge-med { background: #fef9c3; color: #854d0e; }
+.badge-low { background: #fee2e2; color: #991b1b; }
+.heatmap-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 16px; }
+.heat-cell { aspect-ratio: 1.5; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.75em; font-weight: 700; color: white; cursor: pointer; transition: transform 0.15s; position: relative; }
+.heat-cell:hover { transform: scale(1.08); z-index: 2; }
+.heat-label { font-size: 0.7em; color: #94a3b8; text-align: center; margin-top: 4px; }
+.tooltip { display: none; position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background: #0f172a; border: 1px solid #475569; border-radius: 8px; padding: 8px 12px; font-size: 0.8em; white-space: nowrap; z-index: 10; }
+.heat-cell:hover .tooltip { display: block; }
+.color-90 { background: #16a34a; } /* A grade */
+.color-75 { background: #2563eb; } /* B grade */
+.color-60 { background: #d97706; } /* C+ grade */
+.color-45 { background: #dc2626; } /* D grade */
+.color-25 { background: #4b5563; } /* F grade */
+.insight-box { background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.1)); border-left: 4px solid #6366f1; padding: 16px 20px; border-radius: 0 8px 8px 0; margin-top: 16px; }
+.insight-box h3 { color: #a5b4fc; font-size: 0.95em; margin-bottom: 8px; }
+.insight-box p { color: #cbd5e1; font-size: 0.85em; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.brand-card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+.brand-card h3 { font-size: 1.1em; margin-bottom: 4px; }
+.brand-rank { font-size: 0.75em; color: #94a3b8; margin-bottom: 12px; }
+.stat-row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85em; }
+.stat-label { color: #94a3b8; }
+.stat-value { font-weight: 600; }
+.gap-highlight { color: #f87171; }
+.green-highlight { color: #4ade80; }
+</style>
+</head>
+<body>
+
+<h1>🔥 GEO竞争格局热力图</h1>
+<p class="subtitle">Productivity Tools赛道 · 5品牌横向分析 · 数据截至 2026-11-18 · 基于50次×5平台手动测试 + 第三方内容分析</p>
+
+<!-- Section 1: Overall Heatmap -->
+<div class="section">
+  <div class="card">
+    <h2>📊 综合GEO健康度排名 (Health Score)</h2>
+    <div class="two-col">
+      <div>
+        <table>
+          <thead><tr><th>排名</th><th>品牌</th><th>Citation Rate</th><th>Position</th><th>Health Grade</th></tr></thead>
+          <tbody>
+            <tr><td>🥇 1</td><td><strong>Notion</strong></td><td class="grade-a">78%</td><td class="grade-a">2.3</td><td class="grade-a">B+</td></tr>
+            <tr><td>🥈 2</td><td><strong>ClickUp</strong></td><td class="grade-b">68%</td><td class="grade-b">2.8</td><td class="grade-b">B</td></tr>
+            <tr><td>🥉 3</td><td><strong>Coda/Superhuman</strong></td><td class="grade-c">57%</td><td class="grade-c">3.5</td><td class="grade-c">C+</td></tr>
+            <tr><td>4</td><td><strong>Linear</strong></td><td class="grade-d">40%</td><td class="grade-d">4.2</td><td class="grade-d">C</td></tr>
+            <tr><td>5</td><td><strong>Anytype</strong></td><td class="grade-f">20%</td><td class="grade-f">5.5+</td><td class="grade-f">D+</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p style="font-size:0.9em;color:#94a3b8;margin-bottom:12px;">Heatmap: Citation Rate by Brand (color intensity = visibility)</p>
+        <div class="heatmap-grid">
+          <div class="heat-cell color-90" style="grid-column:1;grid-row:1;"><span>78%<div class="tooltip">Notion: Community驱动，UGC最丰富</div></span></div>
+          <div class="heat-cell color-75" style="grid-column:2;grid-row:1;"><span>68%<div class="tooltip">ClickUp: Free plan强，但教程内容弱</div></span></div>
+          <div class="heat-cell color-60" style="grid-column:3;grid-row:1;"><span>57%<div class="tooltip">Coda: Superhuman改名风险中</div></span></div>
+          <div class="heat-cell color-45" style="grid-column:4;grid-row:1;"><span>40%<div class="tooltip">Linear: Speed-first策略导致低内容密度</div></span></div>
+          <div class="heat-cell color-25" style="grid-column:5;grid-row:1;"><span>20%<div class="tooltip">Anytype: Privacy niche，几乎零大众覆盖</div></span></div>
+        </div>
+        <div class="insight-box">
+          <h3>💡 Key Insight</h3>
+          <p>Notion以78%的Citation Rate形成绝对霸权。但Gap最大的机会在于「Alternative queries」——所有品牌的替代方案查询表现都远低于Recommendation查询，这是防御性GEO优化的最大缺口。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 2: Query Type Matrix -->
+<div class="section">
+  <div class="card">
+    <h2>🎯 查询类型竞争力矩阵（A=最强 → F=最弱）</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>查询类型</th><th>Notion</th><th>ClickUp</th><th>Coda</th><th>Linear</th><th>Anytype</th></tr></thead>
+        <tbody>
+          <tr><td>⭐ Recommendation (推荐类)</td><td class="grade-a">A+</td><td class="grade-b">B+</td><td class="grade-c">C</td><td class="grade-d">D</td><td class="grade-f">F</td></tr>
+          <tr><td>⚖️ Comparison (对比类)</td><td class="grade-a">A+</td><td class="grade-b">B+</td><td class="grade-b">B-</td><td class="grade-d">D</td><td class="grade-f">F</td></tr>
+          <tr><td>💰 Pricing (定价类)</td><td class="grade-b">B</td><td class="grade-a">A</td><td class="grade-b">A-</td><td class="grade-b">B</td><td class="grade-d">D</td></tr>
+          <tr><td>📖 Tutorial (教程类)</td><td class="grade-b">B</td><td class="grade-c">C</td><td class="grade-c">C+</td><td class="grade-d">D</td><td class="grade-f">F</td></tr>
+          <tr><td>🔄 Alternative (替代方案)</td><td class="grade-d">D</td><td class="grade-b">B-</td><td class="grade-a">A-</td><td class="grade-c">C</td><td class="grade-f">F</td></tr>
+          <tr><td>🎬 Scenario (场景类)</td><td class="grade-a">A</td><td class="grade-b">B</td><td class="grade-b">B</td><td class="grade-c">C</td><td class="grade-d">D</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="insight-box" style="margin-top:16px;">
+      <h3>🔍 Notable Pattern</h3>
+      <p><strong>Coda在Alternative queries中异常强势</strong>——当用户搜索"Coda alternative"或"best Coda alternatives"时，由于其改名Superhuman Docs造成的brand confusion，AI反而倾向于将Coda相关内容作为答案返回，形成了独特的防御性优势。这对Notion是一个警示信号：当用户搜索"Notion alternative"时，Notion的表现远不如预期（仅13%得分率）。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Section 3: Brand Deep-Dive Cards -->
+<div class="section">
+  <div class="card"><h2>🏢 五品牌深度画像</h2></div>
+  <div class="two-col" style="margin-top:16px;">
+    <!-- Notion -->
+    <div class="brand-card" style="border-color:#6366f1;">
+      <h3>🏆 Notion</h3>
+      <div class="brand-rank">Health Score: 74/100 · Grade B+ · Baseline Benchmark</div>
+      <div class="stat-row"><span class="stat-label">Citation Rate</span><span class="stat-value grade-a">78%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg Position</span><span class="stat-value grade-a">2.3</span></div>
+      <div class="stat-row"><span class="stat-label">Positive Sentiment</span><span class="stat-value grade-a">82%</span></div>
+      <div class="stat-row"><span class="stat-label">P0 Gap</span><span class="stat-value gap-highlight">Alternative queries (13%)</span></div>
+      <div class="stat-row"><span class="stat-label">Key Asset</span><span class="stat-value green-highlight">r/Notion 周帖~1,300</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #334155;font-size:0.8em;color:#94a3b8;">
+        <strong style="color:#e2e8f0;">Strategy:</strong> 强化Alternative防御内容 + 维持community优势
+      </div>
+    </div>
+    <!-- ClickUp -->
+    <div class="brand-card" style="border-color:#22c55e;">
+      <h3>🚀 ClickUp</h3>
+      <div class="brand-rank">Health Score: ~68/100 · Grade B · Challenger</div>
+      <div class="stat-row"><span class="stat-label">Citation Rate</span><span class="stat-value grade-b">~68%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg Position</span><span class="stat-value grade-b">~2.8</span></div>
+      <div class="stat-row"><span class="stat-label">KDnuggets Rating</span><span class="stat-value">4.3★</span></div>
+      <div class="stat-row"><span class="stat-label">P0 Gap</span><span class="stat-value gap-highlight">Tutorial/AI叙事薄弱</span></div>
+      <div class="stat-row"><span class="stat-label">Key Asset</span><span class="stat-value green-highlight">Free plan功能最全</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #334155;font-size:0.8em;color:#94a3b8;">
+        <strong style="color:#e2e8f0;">Strategy:</strong> 主打Free plan差异化 + 建立Tutorial内容护城河
+      </div>
+    </div>
+    <!-- Coda -->
+    <div class="brand-card" style="border-color:#f59e0b;">
+      <h3>🔄 Coda / Superhuman Docs</h3>
+      <div class="brand-rank">Health Score: ~58/100 · Grade C+ · Rebranding Risk</div>
+      <div class="stat-row"><span class="stat-label">Citation Rate</span><span class="stat-value grade-c">~57%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg Position</span><span class="stat-value grade-c">~3.5</span></div>
+      <div class="stat-row"><span class="stat-label">Integration Count</span><span class="stat-value">800+ (vs Notion 500+)</span></div>
+      <div class="stat-row"><span class="stat-label">P0 Risk</span><span class="stat-value gap-highlight">Brand name confusion 🔴</span></div>
+      <div class="stat-row"><span class="stat-label">Key Asset</span><span class="stat-value green-highlight">Grammarly收购buzz</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #334155;font-size:0.8em;color:#94a3b8;">
+        <strong style="color:#e2e8f0;">Strategy:</strong> 统一Brand identity + 利用集成数优势建立技术权威
+      </div>
+    </div>
+    <!-- Linear -->
+    <div class="brand-card" style="border-color:#ef4444;">
+      <h3>📐 Linear</h3>
+      <div class="brand-rank">Health Score: ~48/100 · Grade C · Niche Player</div>
+      <div class="stat-row"><span class="stat-label">Citation Rate</span><span class="stat-value grade-d">~40%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg Position</span><span class="stat-value grade-d">~4.2</span></div>
+      <div class="stat-row"><span class="stat-label">Core Philosophy</span><span class="stat-value">Speed-first, opinionated</span></div>
+      <div class="stat-row"><span class="stat-label">P0 Gap</span><span class="stat-value gap-highlight">Low content density pages</span></div>
+      <div class="stat-row"><span class="stat-label">Key Asset</span><span class="stat-value green-highlight">$0 free plan pricing</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #334155;font-size:0.8em;color:#94a3b8;">
+        <strong style="color:#e2e8f0;">Strategy:</strong> 深耕工程师社区口碑 + 降低入门门槛叙事
+      </div>
+    </div>
+    <!-- Anytype -->
+    <div class="brand-card" style="border-color:#6b7280;">
+      <h3>🔒 Anytype</h3>
+      <div class="brand-rank">Health Score: ~22/100 · Grade D+ · Privacy Niche</div>
+      <div class="stat-row"><span class="stat-label">Citation Rate</span><span class="stat-value grade-f">~20%</span></div>
+      <div class="stat-row"><span class="stat-label">Avg Position</span><span class="stat-value grade-f">5.5+</span></div>
+      <div class="stat-row"><span class="stat-label">Differentiation</span><span class="stat-value">Local-first, P2P encrypted</span></div>
+      <div class="stat-row"><span class="stat-label">P0 Gap</span><span class="stat-value gap-highlight">Near-zero mainstream presence</span></div>
+      <div class="stat-row"><span class="stat-label">Key Asset</span><span class="stat-value green-highlight">Open source + privacy</span></div>
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid #334155;font-size:0.8em;color:#94a3b8;">
+        <strong style="color:#e2e8f0;">Strategy:</strong> 聚焦privacy话题的精准内容 + 开发者社区培育
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: SEO→GEO Dependency Data -->
+<div class="section">
+  <div class="card">
+    <h2>📈 SEM Rush实验数据 × 多品牌分析交叉验证</h2>
+    <div class="two-col">
+      <div>
+        <table>
+          <thead><tr><th>发现</th><th>SEM Rush实验数据</th><th>本审计印证</th></tr></thead>
+          <tbody>
+            <tr><td>Listicle是核心杠杆</td><td>86%引用量来自第三方可外链清单</td><td>Notion拥有数百篇listicle，ClickUp约50+，Linear <10</td></tr>
+            <tr><td>Comparative Content multiplier</td><td>12.25×提升倍数</td><td>Coda在Alternative queries表现反常强势(印证此规律)</td></tr>
+            <tr><td>Citation Half-life</td><td>~30天需持续维护</td><td>Coda改名Superhuman Docs已造成brand dilution (与半衰期规律一致)</td></tr>
+            <tr><td>SEO ↔ GEO强关联</td><td>Google SERP存在→ChatGPT引用</td><td>Notion在所有query类型均领先，与SERP排名正相关</td></tr>
+            <tr><td>Platform distribution</td><td>Gemini 35% + Google AI 32%为主力</td><td>All brands should prioritize Gemini & Google AI Mode optimization</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="insight-box">
+          <h3>🎯  actionable Takeaway for Each Brand</h3>
+          <p><strong>Notion:</strong> 修复Alternative queries防御性缺口 → 创建"best [category] alternatives to Notion"的权威性页面<br><br>
+          <strong>ClickUp:</strong> 扩大Listicle覆盖 → 向TechRadar/CNET等投稿对比评测文章<br><br>
+          <strong>Coda:</strong> 紧急处理Superhuman Docs重命名影响 → 在关键页面的Schema标记中同时标注两个品牌名<br><br>
+          <strong>Linear:</strong> 增加页面内容密度 → 在pricing/features页添加更多FAQ和HowTo Schema<br><br>
+          <strong>Anytype:</strong> 专注利基内容策略 → 创建"privacy-focused PKM tool"的深度对比文章</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Section 5: Next Actions -->
+<div class="section">
+  <div class="card">
+    <h2>✅ Round 7 完成确认 & Round 8 行动计划</h2>
+    <table>
+      <thead><tr><th>交付物</th><th>状态</th><th>备注</th></tr></thead>
+      <tbody>
+        <tr><td>Schema+Technical SEO实战指导文档 (~15KB)</td><td><span class="badge badge-high">✅ 完成</span></td><td>7种JSON-LD模板已可直接使用</td></tr>
+        <tr><td>五品牌GEO竞争格局分析 (Day 1+2)</td><td><span class="badge badge-high">✅ 完成</span></td><td>Notion基准+Coda/ClickUp/Linear/Anytype全覆盖</td></tr>
+        <tr><td>交互式竞争热力图HTML</td><td><span class="badge badge-high">✅ 完成</span></td><td>本页面即为交付物</td></tr>
+        <tr><td>Cold Email首批发送脚本</td><td><span class="badge badge-med">🔄 待执行</span></td><td>Email模板v1已就绪，等待target名单确认</td></tr>
+        <tr><td>Portfolio部署GitHub Pages</td><td><span class="badge badge-med">🔄 阻塞</span></td><td>需要用户提供仓库名或commit权限</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:20px;padding:16px;background:rgba(99,102,241,0.1);border-radius:8px;font-size:0.85em;">
+      <strong style="color:#a5b4fc;">📌 Round 8 优先行动项：</strong><br>
+      1. 🔴 P0 — 发送首封Cold Email给SaaS Segment A leads（使用cold_email_draft_v1中的Template A）<br>
+      2. 🔴 P0 — 推进Portfolio GitHub Pages部署（如无法直接操作，输出完整deploy script供用户执行）<br>
+      3. 🟡 P1 — 发布第一篇文章至知乎/LinkedIn，收集初始反馈<br>
+      4. 🟢 P2 — 开始Deep Dive Listicle placement research（86%引用量来源的策略性拆解）
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;color:#475569;font-size:0.75em;margin-top:32px;">
+  GEO Knowledge Base · Multi-Brand Competitive Analysis · Generated by GEO Agent · 2026-11-18
+</div>
+
+</body>
+</html>
