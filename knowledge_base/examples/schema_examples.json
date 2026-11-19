@@ -1,0 +1,349 @@
+{
+  "_metadata": {
+    "version": "2.0",
+    "last_updated": "2026-11-18",
+    "description": "GEO Schema标记完整模板库 - 可直接复制到项目中"
+  },
+  
+  "schemas": {
+    "article_standard": {
+      "name": "标准文章Schema",
+      "use_case": "博客文章、新闻稿、专题报道",
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "文章标题，包含核心关键词",
+        "description": "2-3句话摘要，第一句必须直接回答问题或给出结论",
+        "image": [
+          "https://example.com/featured-image-1200x630.jpg"
+        ],
+        "author": {
+          "@type": "Person",
+          "name": "作者姓名",
+          "jobTitle": "职位头衔",
+          "url": "https://example.com/author-page",
+          "sameAs": [
+            "https://twitter.com/author_handle",
+            "https://linkedin.com/in/author_profile"
+          ]
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "公司/品牌名称",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://example.com/logo.png",
+            "width": 600,
+            "height": 60
+          }
+        },
+        "datePublished": "2024-11-18T08:00:00+08:00",
+        "dateModified": "2024-11-18T14:30:00+08:00",
+        "wordCount": 2500,
+        "inLanguage": "zh-CN",
+        "articleSection": "技术应用",
+        "keywords": ["关键词1", "关键词2", "关键词3"],
+        "mentions": {
+          "@type": "Thing",
+          "name": "相关实体/人物"
+        }
+      }
+    },
+    
+    "faq_page": {
+      "name": "FAQ页面Schema",
+      "use_case": "帮助中心、常见问题页面、产品说明页",
+      "tips": [
+        "每个问题答案控制在80-150字",
+        "首句必须直接回答，不绕弯子",
+        "最多放10-15个问题，避免信息过载"
+      ],
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "问题一：简洁明确的提问",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "直接给出明确答案。首句必须是答案本身，不要说'根据我们的经验...'或直接重复问题。最好控制在3-5句话内。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "问题二：用户常问的第二个问题",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "这里是第二个问题的标准答案格式..."
+            }
+          }
+        ]
+      }
+    },
+    
+    "howto_guide": {
+      "name": "教程步骤Schema",
+      "use_case": "操作指南、安装教程、流程说明",
+      "tips": [
+        "步骤编号从1开始连续",
+        "每步不超过200字",
+        "可附带图片URL增强可理解性"
+      ],
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "教程标题（动词开头，如'如何配置XX'）",
+        "description": "一句话概括本教程能帮助读者完成什么",
+        "totalTime": "PT15M",
+        "supply": [
+          {"@type": "HowToSupply", "name": "所需物品/工具1"},
+          {"@type": "HowToSupply", "name": "所需物品/工具2"}
+        ],
+        "tool": [
+          {"@type": "HowToTool", "name": "使用的工具/软件"}
+        ],
+        "step": [
+          {
+            "@type": "HowToDirection",
+            "name": "步骤标题",
+            "text": "详细步骤描述...",
+            "url": "https://example.com/image-step1.jpg",
+            "doesNotApply": {
+              "@type": "HowToPart",
+              " appliesTo": ["US", "CA"]
+            }
+          }
+        ]
+      }
+    },
+    
+    "product_review": {
+      "name": "产品评测Schema",
+      "use_case": "产品测评、对比评测、购买指南",
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "产品名称",
+        "description": "产品核心价值主张",
+        "brand": {
+          "@type": "Brand",
+          "name": "品牌名"
+        },
+        "manufacturer": {
+          "@type": "Organization",
+          "name": "制造商名"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "99.99",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": "销售商"
+          }
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.7",
+          "reviewCount": "1250",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "review": [
+          {
+            "@type": "Review",
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "5",
+              "bestRating": "5"
+            },
+            "author": {
+              "@type": "Person",
+              "name": "Reviewer Name",
+              "jobTitle": "Verified Buyer"
+            },
+            "datePublished": "2024-11-01",
+            "reviewBody": "详细的评论内容..."
+          }
+        ],
+        "screenshot": "https://example.com/product-screenshot.jpg"
+      }
+    },
+    
+    "local_business": {
+      "name": "本地商家Schema",
+      "use_case": "实体店、本地服务商、连锁品牌",
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://example.com/#business",
+        "name": "企业名称",
+        "image": [
+          "https://example.com/storefront.jpg",
+          "https://example.com/interior.jpg"
+        ],
+        "url": "https://example.com",
+        "telephone": "+1-555-123-4567",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "123 Main Street",
+          "addressLocality": "City",
+          "addressRegion": "State",
+          "postalCode": "12345",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "40.7128",
+          "longitude": "-74.0060"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "09:00",
+            "closes": "18:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday"],
+            "opens": "10:00",
+            "closes": "16:00"
+          }
+        ],
+        "hasMenu": "https://example.com/menu.pdf",
+        "acceptsReservations": "True",
+        "paymentAccepted": "Cash, Credit Card",
+        "currenciesAccepted": "USD",
+        "founder": {
+          "@type": "Person",
+          "name": "Founder Name"
+        },
+        "foundingDate": "2020-01-01",
+        "numberOfEmployees": {
+          "@type": "QuantitativeValue",
+          "minValue": "10",
+          "maxValue": "50"
+        }
+      }
+    },
+    
+    "course_education": {
+      "name": "教育课程Schema",
+      "use_case": "在线课程、培训项目、知识付费产品",
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "课程名称",
+        "description": "课程简介（包含学习目标和适用人群）",
+        "provider": {
+          "@type": "Organization",
+          "name": "机构名称",
+          "sameAs": "https://example.com"
+        },
+        "educationalUse": "职业技能提升",
+        "teaches": ["技能1", "技能2", "技能3"],
+        "coursePrerequisites": "需要了解的基础知识",
+        "educationalLevel": "Intermediate",
+        "instructionalMethod": "Blended Learning",
+        "isBasedOnUrl": "https://example.com/prerequisites",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "reviewCount": "320"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "299.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
+        },
+        "offers": [{
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "category": "Free Trial"
+        }]
+      }
+    },
+    
+    "event_listing": {
+      "name": "活动列表Schema",
+      "use_case": "线上研讨会、线下活动、webinar",
+      "code": {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "活动名称",
+        "description": "活动介绍",
+        "startDate": "2024-12-15T10:00:00+08:00",
+        "endDate": "2024-12-15T12:00:00+08:00",
+        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "location": {
+          "@type": "VirtualLocation",
+          "url": "https://example.com/register"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "49.99",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2024-11-01T00:00:00Z"
+        },
+        "performer": {
+          "@type": "Person",
+          "name": "演讲者姓名",
+          "jobTitle": "职位名称"
+        },
+        "organizer": {
+          "@type": "Organization",
+          "name": "主办方",
+          "url": "https://example.com"
+        },
+        "image": [
+          "https://example.com/event-banner.jpg"
+        ]
+      }
+    }
+  },
+  
+  "validation_tools": {
+    "google_rich_results_test": {
+      "url": "https://search.google.com/test/rich-results",
+      "use": "验证Rich Results兼容性"
+    },
+    "schema_markup_wizard": {
+      "url": "https://www.schema.dev/",
+      "use": "可视化Schema编辑器"
+    },
+    "jsonlint": {
+      "url": "https://jsonlint.com/",
+      "use": "校验JSON格式"
+    }
+  },
+  
+  "best_practices_checklist": {
+    "syntax_rules": [
+      "使用application/ld+json类型",
+      "确保JSON语法正确（逗号、引号）",
+      "所有required字段都已填充",
+      "@context必须存在且值为'https://schema.org'"
+    ],
+    "content_guidelines": [
+      "值必须是具体、可验证的信息",
+      "避免模糊表述如'很多好评'",
+      "日期统一使用ISO 8601格式",
+      "URL使用绝对路径而非相对路径"
+    ],
+    "placement_tips": [
+      "放在<head>标签内确保爬虫第一时间读取",
+      "同一页面只使用一种主要Schema类型",
+      "多个Schema时用数组包裹或使用嵌套结构",
+      "移动端和桌面端保持一致的Schema标记"
+    ]
+  }
+}

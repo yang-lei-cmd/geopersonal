@@ -1,0 +1,27 @@
+# Cross-machine byte consistency contract.
+# The GEO knowledge base is verified by Git blob SHA-1 against the GitHub
+# remote and by byte-for-byte archive restore. CRLF conversion would change
+# blob hashes and break that verification chain, so LF is enforced everywhere.
+* text=auto eol=lf
+
+*.md   text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.csv  text eol=lf
+*.txt  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+
+# Binary assets must never be touched by EOL conversion.
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.pdf  binary
+*.zip  binary
+*.gz   binary
+*.mp4  binary
+*.mp3  binary
+*.wav  binary
